@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+#Custom
+Instructions.md
+README-template.md
+README.md
+s-eslint.config.js
+Design/

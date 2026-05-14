@@ -27,7 +27,8 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/consistent-type-imports': 'error',
-      'no-console': 'warn',
+      // 'no-console': 'warn',
+      semi: ['error', 'always'],
     },
   },
 ]);

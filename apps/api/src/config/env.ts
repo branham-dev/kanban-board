@@ -4,4 +4,5 @@ if (!process.env.JWT_SECRET) {
 
 export const env = {
   AUTHSECRET: process.env.JWT_SECRET,
+  CONNECTION: process.env.DATABASE_URL,
 };

@@ -21,7 +21,7 @@ export const authenticate = async (c: Context, next: Next) => {
   }
 
   try {
-    const raw: unknown = await verify(token, env.AUTHSECRET, 'HS256');
+    const raw: unknown = await verify(token, env.JWT_SECRET, 'HS256');
     const payload: JwtPayload = JwtPayloadSchema.parse(raw);
 
     const user: AuthUser = {

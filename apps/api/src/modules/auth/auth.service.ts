@@ -1,10 +1,10 @@
 import * as Model from './auth.model.js';
 import { registerSchema } from './auth.schema.js';
-import { AppError } from '@/errors/app.error.js';
+import { AppError } from '@/shared/errors/app.error.js';
 import bcrypt from 'bcryptjs';
 import type { NewUser } from './auth.types';
 import { sign } from 'hono/jwt';
-import { env } from '@/config/env';
+import { env } from '@/shared/config/env.js';
 
 export const register = async (newUser: NewUser) => {
   const { name, email, password } = newUser;

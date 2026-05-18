@@ -1,8 +1,8 @@
-import type { JwtPayload, AuthUser } from '@/types/auth.types.js';
-import { JwtPayloadSchema } from '@/schema/auth.schema.js';
+import type { JwtPayload, AuthUser } from '@/shared/types/auth.types.js';
+import { JwtPayloadSchema } from '@/shared/schema/auth.schema.js';
 import type { Context, Next } from 'hono';
 import { verify } from 'hono/jwt';
-import { env } from '@/config/env.js';
+import { env } from '@/shared/config/env.js';
 
 export const authenticate = async (c: Context, next: Next) => {
   const authHeader = c.req.header('Authorization');

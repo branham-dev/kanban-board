@@ -1,4 +1,4 @@
-import type { AuthUser } from '@/types/auth.types.ts';
+import type { AuthUser } from '@/shared/types/auth.types';
 
 declare module 'hono' {
   interface ContextVariableMap {

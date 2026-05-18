@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 import * as Service from './auth.service';
-import { AppError } from '@/errors/app.error.js';
+import { AppError } from '@/shared/errors/app.error.js';
 
 export const register = async (c: Context) => {
   try {

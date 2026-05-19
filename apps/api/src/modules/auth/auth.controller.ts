@@ -24,10 +24,21 @@ export const register = async (c: Context) => {
 
 export const login = async (c: Context) => {
   try {
-    const existingUser = await c.req.json();
-    console.log(existingUser);
+    const payload = await c.req.json();
+    const response = await Service.login(payload);
+
+    return c.json({ success: true, message: 'Logged in successfully', data: response }, 200);
   } catch (error) {
-    console.log(error);
+    if (error instanceof AppError) {
+      return c.json(
+        {
+          success: false,
+          message: error.message,
+          error: error.errors,
+        },
+        error.statusCode,
+      );
+    }
   }
 };
 

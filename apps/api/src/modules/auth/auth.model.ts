@@ -1,22 +1,22 @@
 import { db } from '@/database/connection';
 import type { User, NewUser } from './auth.types';
-
-// ~ Hello
+import { camelize } from '@/shared/utils/camelize';
 
 export const findUserEmail = async (email: string): Promise<User | undefined> => {
   try {
     const result = await db.query(
       `
-            SELECT id, name, email
+            SELECT id, email, password_hash
             FROM users
             WHERE email = $1
             LIMIT 1
         `,
       [email],
     );
-    return result.rows[0];
+    return camelize(result.rows[0], true);
   } catch (error) {
     console.error('FindUserEmail Model Error:', error);
+    return undefined;
   }
 };
 
@@ -34,5 +34,6 @@ export const register = async (newUser: NewUser): Promise<User | undefined> => {
     return result.rows[0];
   } catch (error) {
     console.error('Register Model Error:', error);
+    return undefined;
   }
 };

@@ -1,0 +1,19 @@
+@use './semantic';
+@use './colors';
+@use './theme';
+
+:root {
+  --font-family-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-sans);
+}

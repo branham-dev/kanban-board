@@ -1,6 +1,7 @@
 @use './semantic';
 @use './colors';
 @use './theme';
+@use './spacing';
 
 :root {
   --font-family-sans: 'Plus Jakarta Sans', sans-serif;
@@ -14,6 +15,19 @@
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: var(--font-family-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: unset;
+  border: none;
 }

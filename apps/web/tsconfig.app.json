@@ -11,7 +11,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@auth/components": ["src/features/auth/components"]
     }
   },
   "include": ["src"]

@@ -1,0 +1,56 @@
+:root {
+  --input-radius: 3px;
+  --input-padding: var(--space-4) var(--space-2);
+}
+
+form {
+  display: block;
+  width: 85%;
+  margin-top: 2rem;
+  background-color: var(--color-surface);
+  padding: 1rem 0;
+  border: 0.01rem solid var(--color-border-muted);
+  border-radius: 5px;
+
+  .formContainer {
+    width: 90%;
+    margin: 0 auto;
+    // background-color: beige;
+
+    button {
+      width: 100%;
+      background-color: var(--color-primary);
+      border-radius: var(--input-radius);
+      padding: var(--input-padding);
+      color: var(--color-text-on-primary);
+    }
+  }
+}
+
+.inputWrapper {
+  margin-bottom: 1.25rem;
+  label {
+    display: block;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    outline: none;
+    border: 0.01rem solid var(--color-border);
+    padding: var(--input-padding);
+    font-family: inherit;
+    color: var(--color-text-secondary);
+    border-radius: 3px;
+    font-size: 1rem;
+    &.error {
+      border-color: var(--color-danger);
+    }
+  }
+  small {
+    color: var(--color-danger);
+  }
+}

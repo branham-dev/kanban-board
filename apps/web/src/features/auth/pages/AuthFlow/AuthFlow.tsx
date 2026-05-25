@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './AuthFlow.module.scss';
 import clsx from 'clsx';
+import { AuthForm } from '@auth/components';
 
 type AuthButtons = Array<{
   text: string;
@@ -28,9 +29,11 @@ const AuthFlow = () => {
   };
 
   const activeButton = authButtons.find((button) => button.isActive);
+
   if (!activeButton) {
     throw new Error('No active auth button found');
   }
+
   const h1Key = activeButton.name;
 
   return (
@@ -58,9 +61,7 @@ const AuthFlow = () => {
           </div>
         </section>
         <section>
-          <form action="">
-            <label htmlFor=""></label>
-          </form>
+          <AuthForm />
         </section>
       </div>
     </main>

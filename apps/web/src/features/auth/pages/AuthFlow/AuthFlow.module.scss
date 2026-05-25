@@ -3,7 +3,7 @@
   margin: 0 auto;
 
   .mainContainer {
-    margin-top: 2rem;
+    margin: 2rem 0;
 
     .title {
       font-size: 1.5rem;
@@ -25,7 +25,10 @@
   }
 }
 
-.section {
+section {
+  display: flex;
+  justify-content: center;
+
   .authToggle {
     width: 50%;
     height: 35px;

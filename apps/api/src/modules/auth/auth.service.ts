@@ -1,5 +1,4 @@
 import * as Model from './auth.model.js';
-import { loginSchema, registerSchema } from './auth.schema.js';
 import { AppError } from '@/shared/errors/app.error.js';
 import bcrypt from 'bcryptjs';
 import type { LoginCredentials, NewUser } from './auth.types';
@@ -7,15 +6,16 @@ import { sign } from 'hono/jwt';
 import { env } from '@/shared/config/env.js';
 import { z } from 'zod';
 import { flattenError } from './utils/flatten.js';
+import { registerSchema, loginSchema } from '@kanban/shared';
 
 export const register = async (newUser: NewUser) => {
   const validated = registerSchema.safeParse(newUser);
   const { name, email, password } = newUser;
 
   if (!validated.success) {
-    // const raw = z.treeifyError(validated.error);
-    // const errors = flattenError(raw);
-    const errors = validated.error.flatten().fieldErrors;
+    const raw = z.treeifyError(validated.error);
+    const errors = flattenError(raw);
+    // const errors = validated.error.flatten().fieldErrors;
 
     throw new AppError('Invalid Credentials', 400, errors);
   }
@@ -54,6 +54,8 @@ export const login = async (loginData: LoginCredentials) => {
   if (!validated.success) {
     const raw = z.treeifyError(validated.error);
     const errors = flattenError(raw);
+
+    // const errors = validated.error.flatten().fieldErrors;
 
     throw new AppError('Invalid credentials', 400, errors);
   }

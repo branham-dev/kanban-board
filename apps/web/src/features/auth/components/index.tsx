@@ -1,3 +1,4 @@
-import AuthForm from './AuthForm.tsx/AuthForm';
+import RegisterForm from './RegisterForm.tsx/RegisterForm';
+import LoginForm from './LoginForm/LoginForm';
 
-export { AuthForm };
+export { RegisterForm, LoginForm };

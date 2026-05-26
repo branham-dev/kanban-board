@@ -1,0 +1,21 @@
+.inputWrapper {
+  margin-bottom: 1.25rem;
+
+  input {
+    width: 100%;
+    outline: none;
+    border: 0.01rem solid var(--color-border);
+    padding: var(--input-padding);
+    font-family: inherit;
+    color: var(--color-text-secondary);
+    border-radius: 3px;
+    font-size: 1rem;
+    &.error {
+      border-color: var(--color-danger);
+    }
+  }
+
+  small {
+    color: var(--color-danger);
+  }
+}

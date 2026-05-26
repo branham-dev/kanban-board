@@ -1,40 +1,30 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './AuthFlow.module.scss';
 import clsx from 'clsx';
-import { AuthForm } from '@auth/components';
+import { LoginForm, RegisterForm } from '@auth/components';
+import type { AuthState } from '@auth/types';
 
 type AuthButtons = Array<{
   text: string;
-  isActive: boolean;
-  name: string;
+  name: AuthState;
 }>;
 
 const AuthFlow = () => {
-  const [authState, setAuthState] = useState({
-    register: true,
-    login: false,
-  });
+  const [authState, setAuthState] = useState<AuthState>('register');
 
-  const isRegister = authState.register;
-  const isLogin = authState.login;
+  const isRegister = authState === 'register';
+  const isLogin = authState === 'login';
 
   const authButtons: AuthButtons = [
-    { text: 'Sign Up', isActive: isRegister, name: 'register' },
-    { text: 'Sign In', isActive: isLogin, name: 'login' },
-  ];
+    { text: 'Sign Up', name: 'register' },
+    { text: 'Sign In', name: 'login' },
+  ] as const;
 
-  const handleAuthClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const key = e.currentTarget.name;
-    setAuthState({ register: false, login: false, [key]: true });
+  const handleAuthClick = (key: AuthState) => {
+    setAuthState(key);
   };
 
-  const activeButton = authButtons.find((button) => button.isActive);
-
-  if (!activeButton) {
-    throw new Error('No active auth button found');
-  }
-
-  const h1Key = activeButton.name;
+  const h1Key = authState;
 
   return (
     <main className={styles.main}>
@@ -47,12 +37,13 @@ const AuthFlow = () => {
           <div className={styles.authToggle}>
             <div className={clsx(styles.toggleSlider, isLogin && styles.active)}></div>
             {authButtons.map((button) => {
+              const isActive = authState === button.name;
               return (
                 <button
                   key={button.text}
                   name={button.name}
-                  className={clsx(button.isActive && styles.active)}
-                  onClick={handleAuthClick}
+                  className={clsx(isActive && styles.active)}
+                  onClick={() => handleAuthClick(button.name)}
                 >
                   {button.text}
                 </button>
@@ -61,7 +52,8 @@ const AuthFlow = () => {
           </div>
         </section>
         <section>
-          <AuthForm />
+          {isRegister && <RegisterForm />}
+          {isLogin && <LoginForm />}
         </section>
       </div>
     </main>

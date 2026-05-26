@@ -20,3 +20,6 @@ export const loginSchema = z.object({
   email: z.email(EMAIL_ERROR),
   password: z.string().min(PASSWORD_MIN, PASSWORD_ERROR),
 });
+
+export type RegisterInputs = z.infer<typeof registerSchema>;
+export type LoginInputs = z.infer<typeof loginSchema>;

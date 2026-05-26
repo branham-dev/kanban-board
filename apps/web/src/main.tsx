@@ -8,9 +8,13 @@ import '@fontsource/plus-jakarta-sans/600.css';
 import '@fontsource/plus-jakarta-sans/700.css';
 import { RouterProvider } from 'react-router-dom';
 import { appRouter } from '@/router';
+import { Provider } from 'react-redux';
+import { appStore } from '@/app/store';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={appRouter} />
+    <Provider store={appStore}>
+      <RouterProvider router={appRouter} />
+    </Provider>
   </StrictMode>,
 );

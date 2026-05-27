@@ -19,6 +19,7 @@ export const register = async (c: Context) => {
         error.statusCode,
       );
     }
+    return c.json({ success: false, message: 'Internal Server Error' }, 500);
   }
 };
 

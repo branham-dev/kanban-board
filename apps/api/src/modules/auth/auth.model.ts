@@ -15,8 +15,8 @@ export const findUserEmail = async (email: string): Promise<User | undefined> =>
     );
     return camelize(result.rows[0], true);
   } catch (error) {
-    console.error('FindUserEmail Model Error:', error);
-    return undefined;
+    console.error('Database Error:', error);
+    throw error;
   }
 };
 
@@ -34,6 +34,6 @@ export const register = async (newUser: NewUser): Promise<User | undefined> => {
     return result.rows[0];
   } catch (error) {
     console.error('Register Model Error:', error);
-    return undefined;
+    throw error;
   }
 };

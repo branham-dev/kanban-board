@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { registerSchema } from '@kanban/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AppForm, InputWrapper, Label } from '@auth/components/ui';
+import { useRegister } from '@auth/service';
 
 type Inputs = {
   name: string;
@@ -13,6 +14,8 @@ type Inputs = {
 };
 
 const RegisterForm = () => {
+  const [registerUser, { isLoading, error }] = useRegister();
+
   const initialValues: Inputs = {
     name: '',
     email: '',
@@ -32,7 +35,14 @@ const RegisterForm = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+    try {
+      const response = await registerUser(data).unwrap();
+      console.log(response);
+    } catch (error: unknown) {
+      console.error(error);
+    }
+  };
 
   const password = watch('password');
 

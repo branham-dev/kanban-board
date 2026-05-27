@@ -2,6 +2,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@kanban/shared';
 import { AppForm, InputWrapper, Label } from '@auth/components/ui';
+import { useLogin } from '@auth/service';
 
 type Inputs = {
   email: string;
@@ -9,6 +10,8 @@ type Inputs = {
 };
 
 const LoginForm = () => {
+  const [loginUser, { isLoading, error }] = useLogin();
+
   const initialValues: Inputs = {
     email: '',
     password: '',
@@ -25,7 +28,14 @@ const LoginForm = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+    try {
+      const response = await loginUser(data).unwrap();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <AppForm onSubmit={handleSubmit(onSubmit)}>

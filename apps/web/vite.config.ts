@@ -10,6 +10,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@auth/components': path.resolve(__dirname, './src/features/auth/components'),
       '@auth/components/*': path.resolve(__dirname, './src/features/auth/components/*'),
+      '@auth/types': path.resolve(__dirname, './src/features/auth/types'),
+      '@auth/service': path.resolve(__dirname, './src/features/auth/service'),
       '@kanban/shared': path.resolve(__dirname, '../../packages/shared/src'),
     },
   },

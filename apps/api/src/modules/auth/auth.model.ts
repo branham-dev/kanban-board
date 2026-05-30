@@ -6,7 +6,7 @@ export const findUserEmail = async (email: string): Promise<User | undefined> =>
   try {
     const result = await db.query(
       `
-            SELECT id, email, password_hash
+            SELECT id, name, email, password_hash
             FROM users
             WHERE email = $1
             LIMIT 1

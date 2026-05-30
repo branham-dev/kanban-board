@@ -3,18 +3,20 @@ import { JwtPayloadSchema } from '@/shared/schema/auth.schema.js';
 import type { Context, Next } from 'hono';
 import { verify } from 'hono/jwt';
 import { env } from '@/shared/config/env.js';
+import { getCookie } from 'hono/cookie';
 
 export const authenticate = async (c: Context, next: Next) => {
-  const authHeader = c.req.header('Authorization');
+  // const authHeader = c.req.header('Authorization');
 
-  if (!authHeader) {
-    return c.json({ error: 'Unauthorized: missing token' }, 401);
-  }
-  const parts = authHeader.split(' ');
-  if (parts.length !== 2 || parts[0] !== 'Bearer') {
-    return c.json({ error: 'Unauthorized: invalid token format' }, 401);
-  }
-  const token = parts[1];
+  // if (!authHeader) {
+  //   return c.json({ error: 'Unauthorized: missing token' }, 401);
+  // }
+  // const parts = authHeader.split(' ');
+  // if (parts.length !== 2 || parts[0] !== 'Bearer') {
+  //   return c.json({ error: 'Unauthorized: invalid token format' }, 401);
+  // }
+  // const token = parts[1];
+  const token = getCookie(c, 'accessToken');
 
   if (!token) {
     return c.json({ error: 'Unauthorized: missing token' }, 401);
@@ -26,7 +28,6 @@ export const authenticate = async (c: Context, next: Next) => {
 
     const user: AuthUser = {
       userId: payload.userId,
-      email: payload.email,
     };
 
     c.set('user', user);

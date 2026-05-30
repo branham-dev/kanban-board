@@ -37,6 +37,7 @@ export const register = async (newUser: NewUser) => {
           },
           env.JWT_SECRET,
         );
+
         return {
           user: user,
           token,
@@ -83,6 +84,7 @@ export const login = async (loginData: LoginCredentials) => {
       } else if (isPasswordValid === true) {
         const safeUser = {
           id: loginResponse.id,
+          name: loginResponse.name,
           email: loginResponse.email,
         };
 

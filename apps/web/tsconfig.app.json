@@ -16,6 +16,7 @@
       "@auth/components/*": ["src/features/auth/components/*"],
       "@auth/types": ["src/features/auth/types"],
       "@auth/service": ["src/features/auth/service"],
+      "@appUtils": ["src/utils"],
       "@kanban/shared": ["../../packages/shared/src"]
     }
   },

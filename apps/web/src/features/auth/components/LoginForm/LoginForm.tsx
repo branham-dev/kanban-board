@@ -3,6 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@kanban/shared';
 import { AppForm, InputWrapper, Label } from '@auth/components/ui';
 import { useLogin } from '@auth/service';
+import { toast } from 'sonner';
+import { narrowError } from '@/utils';
 
 type Inputs = {
   email: string;
@@ -31,8 +33,9 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     try {
       const response = await loginUser(data).unwrap();
-      console.log(response);
-    } catch (error) {
+      toast.success(response.message);
+    } catch (error: unknown) {
+      toast.error(narrowError(error));
       console.log(error);
     }
   };

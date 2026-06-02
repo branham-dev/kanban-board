@@ -5,6 +5,8 @@ import { registerSchema } from '@kanban/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AppForm, InputWrapper, Label } from '@auth/components/ui';
 import { useRegister } from '@auth/service';
+import { toast } from 'sonner';
+import { narrowError } from '@/utils';
 
 type Inputs = {
   name: string;
@@ -38,9 +40,9 @@ const RegisterForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     try {
       const response = await registerUser(data).unwrap();
-      console.log(response);
+      toast.success(response.message);
     } catch (error: unknown) {
-      console.error(error);
+      toast.error(narrowError(error));
     }
   };
 

@@ -1,0 +1,1 @@
+export { narrowError } from './narrowError';

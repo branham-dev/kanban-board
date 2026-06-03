@@ -1,10 +1,11 @@
 import { Hono } from 'hono';
 import * as Controller from './auth.controller.js';
+import { authenticate } from './middleware/auth.middleware.js';
 
 const authRoute = new Hono();
 
 authRoute.post('register', Controller.register);
 authRoute.post('login', Controller.login);
-authRoute.get('me', Controller.current);
+authRoute.get('me', authenticate, Controller.current);
 
 export default authRoute;

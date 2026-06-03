@@ -29,6 +29,7 @@ export default defineConfig([
       '@typescript-eslint/consistent-type-imports': 'error',
       // 'no-console': 'warn',
       semi: ['error', 'always'],
+      'no-useless-catch': 'off',
     },
   },
 ]);

@@ -34,8 +34,9 @@ export const register = async (c: Context) => {
         },
         error.statusCode,
       );
+    } else {
+      return c.json({ success: false, message: 'Internal Server Error' }, 500);
     }
-    return c.json({ success: false, message: 'Internal Server Error' }, 500);
   }
 };
 
@@ -69,16 +70,35 @@ export const login = async (c: Context) => {
         },
         error.statusCode,
       );
+    } else {
+      return c.json({ success: false, message: 'Internal Server Error' }, 500);
     }
-    return c.json({ success: false, message: 'Internal Server Error' }, 500);
   }
 };
 
 export const current = async (c: Context) => {
   try {
-    const currentUser = await c.req.json();
-    console.log(currentUser);
+    const authUser = c.get('user');
+    const response = await Service.current(authUser.userId);
+
+    console.log('@Controller Current: ', response);
+
+    return c.json(
+      { success: true, message: 'Successfully fetched user data', data: response },
+      200,
+    );
   } catch (error) {
-    console.log(error);
+    if (error instanceof AppError) {
+      return c.json(
+        {
+          success: false,
+          message: error.message,
+          error: error.errors,
+        },
+        error.statusCode,
+      );
+    } else {
+      return c.json({ success: false, message: 'Internal Server Error' }, 500);
+    }
   }
 };

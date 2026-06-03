@@ -32,7 +32,6 @@ export const register = async (newUser: NewUser) => {
         const token = await sign(
           {
             userId: user.id,
-            email: user.email,
             exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
           },
           env.JWT_SECRET,
@@ -91,7 +90,6 @@ export const login = async (loginData: LoginCredentials) => {
         const token = await sign(
           {
             userId: safeUser.id,
-            email: safeUser.email,
             exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
           },
           env.JWT_SECRET,
@@ -103,6 +101,25 @@ export const login = async (loginData: LoginCredentials) => {
       }
     }
   } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      error.code === 'ECONNREFUSED'
+    ) {
+      throw new AppError('Database service unavailable. Please try again later.', 503, null);
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const current = async (userId: string) => {
+  try {
+    const user = await Model.current(userId);
+
+    return user;
+  } catch (error) {
     if (
       typeof error === 'object' &&
       error !== null &&

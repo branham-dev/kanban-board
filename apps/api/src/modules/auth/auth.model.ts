@@ -37,3 +37,20 @@ export const register = async (newUser: NewUser): Promise<User | undefined> => {
     throw error;
   }
 };
+
+export const current = async (userId: string) => {
+  try {
+    const query = `
+      SELECT name, email
+      FROM users
+      WHERE id = $1
+    `;
+    const value = [userId];
+    const result = await db.query(query, value);
+
+    return result.rows[0];
+  } catch (error) {
+    console.error('Current User Error:', error);
+    throw error;
+  }
+};

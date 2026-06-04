@@ -5,19 +5,24 @@ import { AppForm, InputWrapper, Label } from '@auth/components/ui';
 import { useLogin } from '@auth/service';
 import { toast } from 'sonner';
 import { narrowError } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@authSlice';
+import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
   email: string;
   password: string;
 };
 
-const LoginForm = () => {
-  const [loginUser, { isLoading, error }] = useLogin();
+const initialValues: Inputs = {
+  email: '',
+  password: '',
+};
 
-  const initialValues: Inputs = {
-    email: '',
-    password: '',
-  };
+const LoginForm = () => {
+  const [loginUser] = useLogin();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -30,13 +35,18 @@ const LoginForm = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+  const onSubmit: SubmitHandler<Inputs> = async (userData: Inputs) => {
     try {
-      const response = await loginUser(data).unwrap();
-      toast.success(response.message);
+      const { data, message } = await loginUser(userData).unwrap();
+
+      dispatch(setUser(data));
+
+      toast.success(message);
+
+      navigate('/dashboard');
     } catch (error: unknown) {
-      toast.error(narrowError(error));
-      console.log(error);
+      const message = narrowError(error);
+      toast.error(message);
     }
   };
 

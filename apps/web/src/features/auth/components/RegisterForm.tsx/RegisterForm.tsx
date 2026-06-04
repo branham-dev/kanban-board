@@ -7,6 +7,9 @@ import { AppForm, InputWrapper, Label } from '@auth/components/ui';
 import { useRegister } from '@auth/service';
 import { toast } from 'sonner';
 import { narrowError } from '@/utils';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setUser } from '@authSlice';
 
 type Inputs = {
   name: string;
@@ -15,15 +18,17 @@ type Inputs = {
   confirmPassword: string;
 };
 
-const RegisterForm = () => {
-  const [registerUser, { isLoading, error }] = useRegister();
+const initialValues: Inputs = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
-  const initialValues: Inputs = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
+const RegisterForm = () => {
+  const [registerUser] = useRegister();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -37,12 +42,18 @@ const RegisterForm = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+  const onSubmit: SubmitHandler<Inputs> = async (userData: Inputs) => {
     try {
-      const response = await registerUser(data).unwrap();
-      toast.success(response.message);
+      const { data, message } = await registerUser(userData).unwrap();
+
+      dispatch(setUser(data));
+
+      toast.success(message);
+
+      navigate('/dashboard');
     } catch (error: unknown) {
-      toast.error(narrowError(error));
+      const message = narrowError(error);
+      toast.error(message);
     }
   };
 

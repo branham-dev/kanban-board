@@ -9,7 +9,7 @@ import '@fontsource/plus-jakarta-sans/700.css';
 import { RouterProvider } from 'react-router-dom';
 import { appRouter } from '@/router';
 import { Provider } from 'react-redux';
-import { appStore } from '@/app/store';
+import { appStore } from '@/store/appStore';
 import { Toaster } from 'sonner';
 
 createRoot(document.getElementById('root')!).render(

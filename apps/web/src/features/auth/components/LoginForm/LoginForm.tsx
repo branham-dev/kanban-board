@@ -5,9 +5,9 @@ import { AppForm, InputWrapper, Label } from '@auth/components/ui';
 import { useLogin } from '@auth/service';
 import { toast } from 'sonner';
 import { narrowError } from '@/utils';
-import { useDispatch } from 'react-redux';
 import { setUser } from '@authSlice';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '@/store/hooks';
 
 type Inputs = {
   email: string;
@@ -21,7 +21,7 @@ const initialValues: Inputs = {
 
 const LoginForm = () => {
   const [loginUser] = useLogin();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const {
@@ -43,7 +43,7 @@ const LoginForm = () => {
 
       toast.success(message);
 
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } catch (error: unknown) {
       const message = narrowError(error);
       toast.error(message);

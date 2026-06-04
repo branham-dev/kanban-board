@@ -7,9 +7,9 @@ import { AppForm, InputWrapper, Label } from '@auth/components/ui';
 import { useRegister } from '@auth/service';
 import { toast } from 'sonner';
 import { narrowError } from '@/utils';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from '@authSlice';
+import { useAppDispatch } from '@/store/hooks';
 
 type Inputs = {
   name: string;
@@ -27,7 +27,7 @@ const initialValues: Inputs = {
 
 const RegisterForm = () => {
   const [registerUser] = useRegister();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const {

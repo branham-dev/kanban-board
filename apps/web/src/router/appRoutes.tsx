@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router-dom';
 import { AuthFlow } from '@/features/auth/pages';
 import Dashboard from '@/layouts/Dashboard/Dashboard';
+import RouteGuard from './RouteGuard';
 
 export const appRoutes: RouteObject[] = [
   {
@@ -8,7 +9,13 @@ export const appRoutes: RouteObject[] = [
     element: <AuthFlow />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard />,
+    element: <RouteGuard />,
+    children: [
+      {
+        path: '/dashboard',
+        element: <Dashboard />,
+        children: [],
+      },
+    ],
   },
 ];

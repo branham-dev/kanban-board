@@ -21,6 +21,6 @@ export default defineConfig({
   server: {
     port: 5174,
     host: true,
-    allowedHosts: ['dev.kanban.branhamkaranja.com'],
+    allowedHosts: ['kanban.branhamkaranja.com'],
   },
 });

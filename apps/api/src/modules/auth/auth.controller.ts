@@ -49,7 +49,7 @@ export const login = async (c: Context) => {
       throw new Error();
     }
 
-    console.log('Response.User @ Controller:', response.user);
+    // console.log('Response.User @ Controller:', response.user);
 
     setCookie(c, 'accessToken', response.token, {
       httpOnly: true,
@@ -81,7 +81,7 @@ export const current = async (c: Context) => {
     const authUser = c.get('user');
     const response = await Service.current(authUser.userId);
 
-    console.log('@Controller Current: ', response);
+    // console.log('@Controller Current: ', response);
 
     return c.json(
       { success: true, message: 'Successfully fetched user data', data: response },
@@ -100,5 +100,20 @@ export const current = async (c: Context) => {
     } else {
       return c.json({ success: false, message: 'Internal Server Error' }, 500);
     }
+  }
+};
+
+export const logout = (c: Context) => {
+  // console.log('@Controller Logout: ', 'response');
+  try {
+    setCookie(c, 'accessToken', '', {
+      httpOnly: true,
+      maxAge: 0,
+    });
+
+    return c.json({ success: true, message: 'Logged out successfully' }, 200);
+  } catch (error) {
+    console.log(error);
+    return c.json({ success: false, message: 'Internal Server Error' }, 500);
   }
 };

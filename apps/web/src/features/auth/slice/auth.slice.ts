@@ -1,12 +1,16 @@
+import { api } from '@/service/api';
 import type { AuthUser } from '@auth/types';
 import { createSlice } from '@reduxjs/toolkit';
+import { authApi } from '@auth/service';
 
 type AuthState = {
   user: AuthUser | null;
+  isAuthChecked: boolean;
 };
 
 const authState: AuthState = {
   user: null,
+  isAuthChecked: false,
 };
 
 const authSlice = createSlice({
@@ -19,6 +23,17 @@ const authSlice = createSlice({
     clearUser: (state) => {
       state.user = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(authApi.endpoints.hydrateUser.matchFulfilled, (state, { payload }) => {
+      state.user = payload.data;
+      state.isAuthChecked = true;
+    });
+
+    builder.addMatcher(authApi.endpoints.hydrateUser.matchRejected, (state) => {
+      state.user = null;
+      state.isAuthChecked = true;
+    });
   },
 });
 

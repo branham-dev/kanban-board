@@ -1,5 +1,6 @@
 import { api } from '@/service/api';
 import type { RegisterInputs, LoginInputs } from '@kanban/shared';
+import type { AuthUser, UserResponse } from '@auth/types';
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +19,18 @@ export const authApi = api.injectEndpoints({
         body: payload,
       }),
     }),
+
+    hydrateUser: builder.query<UserResponse, void>({
+      query: () => ({
+        url: 'auth/me',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation: useRegister, useLoginMutation: useLogin } = authApi;
+export const {
+  useRegisterMutation: useRegister,
+  useLoginMutation: useLogin,
+  useHydrateUserQuery: useHydrate,
+} = authApi;

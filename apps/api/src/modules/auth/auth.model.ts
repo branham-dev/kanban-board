@@ -13,7 +13,10 @@ export const findUserEmail = async (email: string): Promise<User | undefined> =>
         `,
       [email],
     );
-    return camelize(result.rows[0], true);
+    const response = camelize(result.rows[0], true);
+    if (!response) return undefined;
+
+    return response as User;
   } catch (error) {
     console.error('Database Error:', error);
     throw error;

@@ -1,8 +1,16 @@
-export const camelize = (obj: Record<string, unknown>, action?: boolean | undefined) => {
-  if (!obj) return obj;
+type QueryResponse = Record<string, unknown>;
+
+type CamelizeInput = QueryResponse | QueryResponse[] | null | undefined;
+
+export const camelize = (response: CamelizeInput, action?: boolean | undefined): CamelizeInput => {
+  if (response == null) return undefined;
+
+  if (Array.isArray(response)) {
+    return response.map((object) => camelize(object, action)) as QueryResponse[];
+  }
 
   const result = Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => {
+    Object.entries(response).map(([key, value]) => {
       if (action === true) {
         return [key.split('_')[0], value];
       }

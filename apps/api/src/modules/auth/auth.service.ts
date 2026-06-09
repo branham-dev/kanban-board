@@ -7,6 +7,7 @@ import { env } from '@/shared/config/env.js';
 import { z } from 'zod';
 import { flattenError } from './utils/flatten.js';
 import { registerSchema, loginSchema } from '@kanban/shared';
+import { classifyError } from '@/shared/errors/classifyError.js';
 
 export const register = async (newUser: NewUser) => {
   try {
@@ -44,16 +45,7 @@ export const register = async (newUser: NewUser) => {
       }
     }
   } catch (error: unknown) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      error.code === 'ECONNREFUSED'
-    ) {
-      throw new AppError('Database service unavailable. Please try again later.', 503, null);
-    } else {
-      throw error;
-    }
+    throw classifyError(error);
   }
 };
 
@@ -101,16 +93,7 @@ export const login = async (loginData: LoginCredentials) => {
       }
     }
   } catch (error: unknown) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      error.code === 'ECONNREFUSED'
-    ) {
-      throw new AppError('Database service unavailable. Please try again later.', 503, null);
-    } else {
-      throw error;
-    }
+    throw classifyError(error);
   }
 };
 
@@ -119,16 +102,7 @@ export const current = async (userId: string) => {
     const user = await Model.current(userId);
 
     return user;
-  } catch (error) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      error.code === 'ECONNREFUSED'
-    ) {
-      throw new AppError('Database service unavailable. Please try again later.', 503, null);
-    } else {
-      throw error;
-    }
+  } catch (error: unknown) {
+    throw classifyError(error);
   }
 };

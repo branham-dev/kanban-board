@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import authRoute from '@/modules/auth/auth.routes.js';
 import { cors } from 'hono/cors';
+import { boardRoute } from '@/modules/boards/boards.routes';
 
 const app = new Hono();
 
@@ -19,5 +20,6 @@ app.get('/', (c) => {
 });
 
 app.route('/auth', authRoute);
+app.route('/', boardRoute);
 
 export default app;

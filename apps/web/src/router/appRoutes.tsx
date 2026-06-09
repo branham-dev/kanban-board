@@ -1,8 +1,9 @@
 import type { RouteObject } from 'react-router-dom';
 import { AuthFlow } from '@/features/auth/pages';
-import Dashboard from '@/layouts/Dashboard/Dashboard';
+import Dashboard from '@/layouts/DashboardLayout/Dashboard';
 import RouteGuard from './RouteGuard';
 import AppLayout from '@/layouts/AppLayout/AppLayout';
+import { UserHome } from '@/features/dashboard/pages';
 
 export const appRoutes: RouteObject[] = [
   {
@@ -18,7 +19,12 @@ export const appRoutes: RouteObject[] = [
           {
             path: '/dashboard',
             element: <Dashboard />,
-            children: [],
+            children: [
+              {
+                index: true,
+                element: <UserHome />,
+              },
+            ],
           },
         ],
       },

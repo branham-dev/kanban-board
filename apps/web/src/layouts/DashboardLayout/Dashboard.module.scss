@@ -1,6 +1,9 @@
 .dashboard {
   background-color: var(--color-bg);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 
   h1 {
     color: var(--color-text-primary);
@@ -15,4 +18,12 @@
     font-weight: 500;
     letter-spacing: 0.1em;
   }
+}
+
+.outletWrapper {
+  width: 98%;
+  margin: 0 auto;
+  // background-color: var(--color-surface);
+  flex: 1;
+  overflow: auto;
 }

@@ -1,4 +1,4 @@
-import styles from './Dashboard.module.scss';
+import styles from './UserHome.module.scss';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import type { RootState } from '@/store/appStore';
 import type { AuthUser } from '@/features/auth/types';
@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { clearUser } from '@authSlice';
 import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
+const UserHome = () => {
   const user: AuthUser | null = useAppSelector((state: RootState) => state.auth.user);
 
   console.log(user);
@@ -29,14 +29,16 @@ const Dashboard = () => {
     }
   };
 
-  return (
-    <main className={styles.dashboard}>
+  return <main></main>;
+};
+
+export default UserHome;
+
+{
+  /* <main className={styles.dashboard}>
       <h1>Welcome, {user?.name || 'User'}!</h1>
       <button onClick={handleLogout} className={styles.button}>
         Logout
       </button>
-    </main>
-  );
-};
-
-export default Dashboard;
+    </main> */
+}

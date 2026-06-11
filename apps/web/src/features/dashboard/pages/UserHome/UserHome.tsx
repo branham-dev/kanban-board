@@ -10,9 +10,6 @@ import { useNavigate } from 'react-router-dom';
 
 const UserHome = () => {
   const user: AuthUser | null = useAppSelector((state: RootState) => state.auth.user);
-
-  console.log(user);
-
   const [logout] = useLogout();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -29,7 +26,14 @@ const UserHome = () => {
     }
   };
 
-  return <main></main>;
+  return (
+    <main>
+      <h1>Welcome, {user?.name || 'User'}!</h1>
+      <button onClick={handleLogout} className={styles.button}>
+        Logout
+      </button>
+    </main>
+  );
 };
 
 export default UserHome;

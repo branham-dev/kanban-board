@@ -12,8 +12,8 @@ export const register = async (c: Context) => {
 
   setCookie(c, 'accessToken', response.token, {
     httpOnly: true,
-    secure: false,
-    sameSite: 'Lax',
+    secure: true,
+    sameSite: 'none',
     path: '/',
     maxAge: 60 * 60 * 24 * 7,
   });
@@ -34,8 +34,8 @@ export const login = async (c: Context) => {
 
   setCookie(c, 'accessToken', response.token, {
     httpOnly: true,
-    secure: false,
-    sameSite: 'Lax',
+    secure: true,
+    sameSite: 'none',
     path: '/',
     maxAge: 60 * 60 * 24 * 7,
   });

@@ -21,7 +21,7 @@ export const appRoutes: RouteObject[] = [
             element: <Dashboard />,
             children: [
               {
-                index: true,
+                path: ':boardId',
                 element: <UserHome />,
               },
             ],

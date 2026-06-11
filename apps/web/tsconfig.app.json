@@ -18,7 +18,8 @@
       "@auth/service": ["src/features/auth/service"],
       "@appUtils": ["src/utils"],
       "@authSlice": ["src/features/auth/slice"],
-      "@kanban/shared": ["../../packages/shared/src"]
+      "@kanban/shared": ["../../packages/shared/src"],
+      "@dashboard/*": ["src/features/dashboard/*"]
     }
   },
   "include": ["src"]

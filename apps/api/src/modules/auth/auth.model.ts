@@ -20,15 +20,40 @@ export const findUserEmail = async (email: string): Promise<User | undefined> =>
 
 export const register = async (newUser: NewUser): Promise<User | undefined> => {
   const { name, email, password } = newUser;
-  const query = `
-      INSERT INTO users (name, email, password_hash)
-      VALUES ($1, $2, $3)
-      RETURNING id, name, email
-    `;
-  const values = [name, email, password];
-  const result = await db.query(query, values);
+  const client = await db.connect();
 
-  return result.rows[0];
+  try {
+    await client.query('BEGIN');
+    const userResult = await client.query(
+      `
+          INSERT INTO users (name, email, password_hash)
+          VALUES ($1, $2, $3)
+          RETURNING id, name, email
+        `,
+      [name, email, password],
+    );
+
+    const user = userResult.rows[0];
+    console.log('Creation: ', user);
+
+    await client.query(
+      `
+          INSERT INTO user_preferences (user_id)
+          VALUES ($1)
+        `,
+      [user.id],
+    );
+
+    await client.query('COMMIT');
+
+    console.log('Preferences: ', user);
+    return user;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 export const current = async (userId: string) => {

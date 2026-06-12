@@ -40,5 +40,5 @@ export const {
   useRegisterMutation: useRegister,
   useLoginMutation: useLogin,
   useHydrateUserQuery: useHydrate,
-  useLogoutMutation: useLogout,
+  useLogoutMutation,
 } = authApi;

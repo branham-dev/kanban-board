@@ -1,1 +1,1 @@
-export { authApi, useRegister, useLogin, useHydrate, useLogout } from './authApi';
+export { authApi, useRegister, useLogin, useHydrate, useLogoutMutation } from './authApi';

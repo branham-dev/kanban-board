@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router-dom';
 import { AuthFlow } from '@/features/auth/pages';
-import Dashboard from '@/layouts/DashboardLayout/Dashboard';
+import Dashboard from '@/layouts/Dashboard/Dashboard';
 import RouteGuard from './RouteGuard';
 import AppLayout from '@/layouts/AppLayout/AppLayout';
 import { UserHome } from '@/features/dashboard/pages';

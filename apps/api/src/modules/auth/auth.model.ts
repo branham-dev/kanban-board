@@ -40,5 +40,9 @@ export const current = async (userId: string) => {
   const value = [userId];
   const result = await db.query(query, value);
 
+  if (result.rows.length === 0) {
+    return null;
+  }
+
   return result.rows[0];
 };

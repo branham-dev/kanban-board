@@ -47,12 +47,21 @@ export const current = async (c: Context) => {
   const authUser = c.get('user');
   const response = await Service.current(authUser.userId);
 
+  if (response == null) {
+    setCookie(c, 'accessToken', '', {
+      httpOnly: true,
+      path: '/',
+      maxAge: 0,
+    });
+  }
+
   return c.json({ success: true, message: 'Successfully fetched user data', data: response }, 200);
 };
 
 export const logout = (c: Context) => {
   setCookie(c, 'accessToken', '', {
     httpOnly: true,
+    path: '/',
     maxAge: 0,
   });
 

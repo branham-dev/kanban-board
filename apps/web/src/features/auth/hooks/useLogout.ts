@@ -1,5 +1,6 @@
 import { useLogoutMutation } from '@/features/auth/service';
 import { clearUser } from '@/features/auth/slice';
+import { api } from '@/service/api';
 import { useAppDispatch } from '@/store/hooks';
 import { narrowError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ export const useLogout = () => {
       const response = await logout().unwrap();
 
       dispatch(clearUser());
+      dispatch(api.util.resetApiState());
       toast.success(response.message);
       navigate('/', { replace: true });
     } catch (error) {

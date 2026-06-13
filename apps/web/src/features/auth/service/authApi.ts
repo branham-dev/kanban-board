@@ -20,11 +20,14 @@ export const authApi = api.injectEndpoints({
       }),
     }),
 
-    hydrateUser: builder.query<UserResponse, void>({
+    hydrateUser: builder.query<AuthUser, void>({
       query: () => ({
         url: 'auth/me',
         method: 'GET',
       }),
+      transformResponse: (response: UserResponse) => {
+        return response.data;
+      },
     }),
 
     logout: builder.mutation<{ success: boolean; message: string }, void>({

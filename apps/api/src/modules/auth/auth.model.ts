@@ -34,7 +34,6 @@ export const register = async (newUser: NewUser): Promise<User | undefined> => {
     );
 
     const user = userResult.rows[0];
-    console.log('Creation: ', user);
 
     await client.query(
       `
@@ -46,7 +45,6 @@ export const register = async (newUser: NewUser): Promise<User | undefined> => {
 
     await client.query('COMMIT');
 
-    console.log('Preferences: ', user);
     return user;
   } catch (error) {
     await client.query('ROLLBACK');
@@ -57,17 +55,23 @@ export const register = async (newUser: NewUser): Promise<User | undefined> => {
 };
 
 export const current = async (userId: string) => {
-  const query = `
-      SELECT name, email
-      FROM users
-      WHERE id = $1
-    `;
+  const queryString = `
+    SELECT
+      u.name,
+      u.email,
+      up.last_board_id
+    FROM users u
+    LEFT JOIN user_preferences up
+      ON up.user_id = u.id
+    WHERE u.id = $1
+  `;
   const value = [userId];
-  const result = await db.query(query, value);
+  const result = await db.query(queryString, value);
+  console.log(camelize(result.rows[0]));
 
   if (result.rows.length === 0) {
     return null;
   }
 
-  return result.rows[0];
+  return camelize(result.rows[0]);
 };

@@ -6,7 +6,7 @@ import addIcon from '@/assets/icon-add-task-mobile.svg';
 import verticalEllipsis from '@/assets/icon-vertical-ellipsis.svg';
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { useListBoards } from '@dashboard/api';
+import { useListBoards, useUpdateLastBoardMutation } from '@dashboard/api';
 import { LayoutList } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -30,11 +30,18 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data = [], isLoading } = useListBoards();
 
+  const [updateLastBoard] = useUpdateLastBoardMutation();
+
   const boards = Array.from(new Map(data.map((b) => [b.name, b])).values());
 
-  const handleClick = (boardId: string) => {
-    navigate(`/dashboard/${boardId}`);
-    setIsOpen(false);
+  const handleClick = async (boardId: string) => {
+    try {
+      await updateLastBoard(boardId).unwrap();
+      navigate(`/dashboard/${boardId}`);
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const boardName = data.find((board) => board.id === boardId);
@@ -72,7 +79,7 @@ const Navbar = () => {
         <div className={styles.dropdownInner}>
           <p className={clsx(styles.boardLayout, styles.title)}>ALL BOARDS ({boards.length})</p>
           {boards.map((board) => (
-            <BoardName onClick={() => handleClick(board.id)}>
+            <BoardName key={board.id} onClick={() => handleClick(board.id)}>
               <LayoutList color="#697589" size={24} strokeWidth={1.5} />
               <p>{board.name}</p>
             </BoardName>

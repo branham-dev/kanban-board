@@ -1,5 +1,5 @@
 import { Button } from '../../components';
-import { useLogout } from '@dashboard/hooks';
+import { useLogout } from '@/features/auth/hooks';
 
 const UserHome = () => {
   const logout = useLogout();
@@ -13,12 +13,3 @@ const UserHome = () => {
 };
 
 export default UserHome;
-
-{
-  /* <main className={styles.dashboard}>
-      <h1>Welcome, {user?.name || 'User'}!</h1>
-      <button onClick={handleLogout} className={styles.button}>
-        Logout
-      </button>
-    </main> */
-}

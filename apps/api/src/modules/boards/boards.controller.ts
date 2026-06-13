@@ -14,3 +14,11 @@ export const createBoard = async (c: Context) => {
   const response = await Service.createBoard(user.userId, boardData);
   return c.json({ success: true, message: 'Board created successfully', data: response }, 201);
 };
+
+export const updateLastBoard = async (c: Context) => {
+  const boardData = await c.req.json();
+  const { userId } = c.get('user');
+  const response = await Service.updateLastBoard(userId, boardData);
+
+  return c.json({ success: true, message: 'Last board updated successfully', data: response });
+};

@@ -5,17 +5,27 @@ import { useListBoards } from '@/features/dashboard/api';
 import { useAppSelector } from '@/store/hooks';
 import type { RootState } from '@/store/appStore';
 import type { AuthUser } from '@/features/auth/types';
-import { useLogout } from '@dashboard/hooks';
+import { useLogout } from '@/features/auth/hooks';
+import { useHydrate } from '@/features/auth/service';
 
 const Dashboard = () => {
-  const user: AuthUser | null = useAppSelector((state: RootState) => state.auth.user);
+  const authUser: AuthUser | null = useAppSelector((state: RootState) => state.auth.user);
   const { boardId } = useParams();
   const logout = useLogout();
 
-  const { data = [], isLoading } = useListBoards();
+  const { isLoading: userLoading } = useHydrate();
+  const { data: boards = [], isLoading: boardsLoading } = useListBoards();
 
-  if (!isLoading && data.length > 0 && !boardId) {
-    return <Navigate to={`/dashboard/${data[0]?.id}`} replace />;
+  if (userLoading || boardsLoading) {
+    return null;
+  }
+
+  if (!boardId && boards.length > 0) {
+    const lastBoard = boards.find((board) => board.id === authUser?.lastBoardId);
+
+    const targetBoard = lastBoard?.id;
+
+    return <Navigate to={`/dashboard/${targetBoard}`} replace />;
   }
 
   return (
@@ -24,7 +34,7 @@ const Dashboard = () => {
       <div className={styles.outletWrapper}>
         {boardId === undefined ? (
           <main>
-            <h1>Welcome, {user?.name || 'User'}!</h1>
+            <h1>Welcome, {authUser?.name || 'User'}!</h1>
             <Button clickAction={logout}>Logout</Button>
           </main>
         ) : (

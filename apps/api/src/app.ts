@@ -11,7 +11,7 @@ app.use(
   '*',
   cors({
     origin: ['http://localhost:5174', 'https://kanban.branhamkaranja.com'],
-    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }),
@@ -25,7 +25,7 @@ app.route('/auth', authRoute);
 app.route('/', boardRoute);
 
 app.onError((error, c) => {
-  // console.log(error);
+  console.log(error);
 
   if (error instanceof AppError) {
     return c.json(

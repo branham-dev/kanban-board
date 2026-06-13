@@ -12,7 +12,14 @@ export const boardApi = api.injectEndpoints({
         return response.data;
       },
     }),
+    updateLastBoard: builder.mutation<void, string>({
+      query: (boardId) => ({
+        url: '/users/preferences/last-board',
+        method: 'PATCH',
+        body: { boardId },
+      }),
+    }),
   }),
 });
 
-export const { useListBoardsQuery: useListBoards } = boardApi;
+export const { useListBoardsQuery: useListBoards, useUpdateLastBoardMutation } = boardApi;

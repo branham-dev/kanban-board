@@ -6,16 +6,6 @@ import { env } from '@/shared/config/env.js';
 import { getCookie } from 'hono/cookie';
 
 export const authenticate = async (c: Context, next: Next) => {
-  // const authHeader = c.req.header('Authorization');
-
-  // if (!authHeader) {
-  //   return c.json({ error: 'Unauthorized: missing token' }, 401);
-  // }
-  // const parts = authHeader.split(' ');
-  // if (parts.length !== 2 || parts[0] !== 'Bearer') {
-  //   return c.json({ error: 'Unauthorized: invalid token format' }, 401);
-  // }
-  // const token = parts[1];
   const token = getCookie(c, 'accessToken');
 
   if (!token) {
@@ -34,6 +24,6 @@ export const authenticate = async (c: Context, next: Next) => {
     await next();
   } catch (error) {
     console.error('Auth middleware error:', error);
-    return c.json({ error: 'Unauthorized: invalid or expired token' }, 401);
+    return c.json('Unauthorized: invalid or expired token', 401);
   }
 };

@@ -73,10 +73,13 @@ export const login = async (loginData: LoginCredentials) => {
         email: loginResponse.email,
       };
 
+      // const tesingExpiry = Math.floor(Date.now() / 1000) + 15;
+      const expiry = Math.floor(Date.now() / 1000) + 60 * 60 * 24;
+
       const token = await sign(
         {
           userId: safeUser.id,
-          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+          exp: expiry,
         },
         env.JWT_SECRET,
       );
@@ -89,11 +92,7 @@ export const login = async (loginData: LoginCredentials) => {
 };
 
 export const current = async (userId: string) => {
-  // try {
   const user = await Model.current(userId);
 
   return user;
-  // } catch (error: unknown) {
-  // throw classifyError(error);
-  // }
 };

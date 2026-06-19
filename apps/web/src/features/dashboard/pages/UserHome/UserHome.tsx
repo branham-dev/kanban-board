@@ -1,10 +1,18 @@
 import styles from './UserHome.module.scss';
 import { useState } from 'react';
 import { Button, Modal } from '../../components';
+import { useFetchBoardQuery } from '../../api';
+import { useParams } from 'react-router-dom';
 
 const UserHome = () => {
+  const { boardId } = useParams();
   const [isEmpty] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: board } = useFetchBoardQuery(boardId!, {
+    skip: !boardId,
+  });
+  console.log(board);
 
   const handleClick = () => {
     setIsOpen(true);

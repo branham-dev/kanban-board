@@ -17,3 +17,25 @@ export type LastBoardParam = {
   userId: string;
   payload: LastBoardData;
 };
+
+export type ColumnData = {
+  id: string;
+  boardId: string;
+  name: string;
+  position: number;
+};
+
+export type Task = {
+  id: string;
+  columnId: string;
+  title: string;
+  description: string;
+  position: number;
+};
+
+export type Subtask = {
+  id: string;
+  taskId: string;
+  title: string;
+  isCompleted: boolean;
+};

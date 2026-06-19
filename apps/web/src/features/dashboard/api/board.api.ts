@@ -19,7 +19,17 @@ export const boardApi = api.injectEndpoints({
         body: { boardId },
       }),
     }),
+    fetchBoard: builder.query<unknown, string>({
+      query: (boardId) => ({
+        url: `/dashboard/${boardId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useListBoardsQuery: useListBoards, useUpdateLastBoardMutation } = boardApi;
+export const {
+  useListBoardsQuery: useListBoards,
+  useUpdateLastBoardMutation,
+  useFetchBoardQuery,
+} = boardApi;

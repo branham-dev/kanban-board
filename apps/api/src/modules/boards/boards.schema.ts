@@ -5,6 +5,6 @@ export const createBoardSchema = z.object({
   position: z.number().int('Must be an integer').nonnegative('Must be 0 or greater'),
 });
 
-export const updateLastBoardSchema = z.object({
+export const boardIdSchema = z.object({
   boardId: z.uuid(),
 });

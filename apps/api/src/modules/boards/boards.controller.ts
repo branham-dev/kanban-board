@@ -22,3 +22,11 @@ export const updateLastBoard = async (c: Context) => {
 
   return c.json({ success: true, message: 'Last board updated successfully', data: response });
 };
+
+export const listBoard = async (c: Context) => {
+  const boardId = c.req.param('boardId');
+  const { userId } = c.get('user');
+  const response = await Service.listBoard(boardId, userId);
+
+  return c.json({ success: true, message: 'Success!', data: response ?? 'undefined' });
+};

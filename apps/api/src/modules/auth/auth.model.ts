@@ -67,7 +67,6 @@ export const current = async (userId: string) => {
   `;
   const value = [userId];
   const result = await db.query(queryString, value);
-  console.log(camelize(result.rows[0]));
 
   if (result.rows.length === 0) {
     return null;

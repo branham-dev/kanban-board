@@ -1,1 +1,1 @@
-export { useListBoards, useUpdateLastBoardMutation } from './board.api';
+export { useListBoards, useUpdateLastBoardMutation, useFetchBoardQuery } from './board.api';

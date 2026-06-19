@@ -34,8 +34,8 @@ export const login = async (c: Context) => {
 
   setCookie(c, 'accessToken', response.token, {
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: false,
+    sameSite: 'lax',
     path: '/',
     maxAge: 60 * 60 * 24 * 7,
   });

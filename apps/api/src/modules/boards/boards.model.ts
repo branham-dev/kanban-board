@@ -1,6 +1,6 @@
 import { db } from '@/database/connection';
 import { camelize } from '@/shared/utils/camelize';
-import type { BoardData, LastBoard } from './boards.types';
+import type { BoardData, ColumnData, Subtask, Task } from './boards.types';
 
 export const listAllBoards = async (userId: string) => {
   const string = `
@@ -10,7 +10,7 @@ export const listAllBoards = async (userId: string) => {
         `;
   const value = [userId];
   const result = await db.query(string, value);
-  // console.log(result.rows);
+
   return camelize(result.rows);
 };
 
@@ -22,13 +22,11 @@ export const createBoard = async (userId: string, boardName: string, position: n
         `;
   const values = [userId, boardName, position];
   const result = await db.query(string, values);
-  // console.log('Database: ', result.rows);
+
   return camelize(result.rows[0]);
 };
 
 export const findBoard = async (boardId: string): Promise<BoardData | undefined> => {
-  // console.log("At Find Board Model");
-  // return;
   const queryString = `
     SELECT id, name, user_id
     FROM boards
@@ -36,12 +34,11 @@ export const findBoard = async (boardId: string): Promise<BoardData | undefined>
   `;
   const response = await db.query(queryString, [boardId]);
   const resultData = camelize(response.rows[0]);
-  // console.log("Model Database Response: ", resultData);
+
   return resultData as BoardData;
 };
 
 export const updateLastBoard = async (userId: string, boardId: string): Promise<void> => {
-  // console.log("At Update Last Board Model");
   const queryString = `
     UPDATE user_preferences
     SET last_board_id = $1,
@@ -51,16 +48,58 @@ export const updateLastBoard = async (userId: string, boardId: string): Promise<
   await db.query(queryString, [boardId, userId]);
 };
 
-// export const UpdateBoard = async (userId: string, boardName: string, position: number) => {
+export const listBoard = async (boardId: string): Promise<BoardData | undefined> => {
+  const queryString = `
+    SELECT id, user_id, name
+    FROM boards
+    WHERE id = $1
+  `;
+  const response = await db.query(queryString, [boardId]);
+  const result = camelize(response.rows[0]);
 
-//     const string = `
-//             UPDATE boards
-//             SET name = $1
-//                 position = $2
-//             WHERE id = $3 AND user_id = $4
-//             RETURNING *;
-//         `;
-//     const values = [userId, boardName, position];
-//     const result = await db.query(string, values);
-//     console.log('Database: ', result.rows);
-// };
+  return result as BoardData;
+};
+
+export const listColumns = async (boardId: string): Promise<ColumnData[]> => {
+  const queryString = `
+    SELECT id, board_id, name, position
+    FROM columns
+    WHERE board_id = $1
+    ORDER BY position
+  `;
+  const response = await db.query(queryString, [boardId]);
+  const result = camelize<ColumnData[]>(response.rows);
+
+  return result;
+};
+
+export const listTasks = async (columnsId: Array<string>): Promise<Task[]> => {
+  if (columnsId.length === 0) {
+    return [];
+  }
+  const queryString = `
+    SELECT id, column_id, title, description, position
+    FROM tasks
+    WHERE column_id = ANY($1::uuid[])
+    ORDER BY position
+  `;
+  const response = await db.query(queryString, [columnsId]);
+  const result = camelize<Task[]>(response.rows);
+
+  return result;
+};
+
+export const listSubtasks = async (taskIds: string[]): Promise<Subtask[]> => {
+  if (taskIds.length === 0) {
+    return [];
+  }
+  const queryString = `
+    SELECT id, task_id, title, is_completed
+    FROM subtasks
+    WHERE task_id = ANY($1::uuid[])
+  `;
+  const response = await db.query(queryString, [taskIds]);
+  const result = camelize<Subtask[]>(response.rows);
+
+  return result;
+};

@@ -2,11 +2,11 @@ type QueryResponse = Record<string, unknown>;
 
 type CamelizeInput = QueryResponse | QueryResponse[] | null | undefined;
 
-export const camelize = (response: CamelizeInput, action?: boolean | undefined): CamelizeInput => {
-  if (response == null) return undefined;
+export const camelize = <T extends CamelizeInput>(response: T, action?: boolean | undefined): T => {
+  if (response == null) return response;
 
   if (Array.isArray(response)) {
-    return response.map((object) => camelize(object, action)) as QueryResponse[];
+    return response.map((object) => camelize(object, action)) as T;
   }
 
   const result = Object.fromEntries(

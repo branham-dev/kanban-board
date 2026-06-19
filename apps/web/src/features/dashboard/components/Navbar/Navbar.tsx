@@ -78,12 +78,14 @@ const Navbar = () => {
       <div className={clsx(styles.dropdown, isOpen && styles.active)}>
         <div className={styles.dropdownInner}>
           <p className={clsx(styles.boardLayout, styles.title)}>ALL BOARDS ({boards.length})</p>
-          {boards.map((board) => (
-            <BoardName key={board.id} onClick={() => handleClick(board.id)}>
-              <LayoutList color="#697589" size={24} strokeWidth={1.5} />
-              <p>{board.name}</p>
-            </BoardName>
-          ))}
+          <div className={styles.boardList}>
+            {boards.map((board) => (
+              <BoardName key={board.id} onClick={() => handleClick(board.id)}>
+                <LayoutList color="#697589" size={24} strokeWidth={1.5} />
+                <p>{board.name}</p>
+              </BoardName>
+            ))}
+          </div>
           <BoardName>
             <LayoutList color="#635fc7" size={24} strokeWidth={1.5} />
             <p className={styles.createBoard}>+ Create New Board</p>

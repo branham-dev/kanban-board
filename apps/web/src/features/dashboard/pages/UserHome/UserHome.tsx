@@ -1,14 +1,29 @@
-import { Button } from '../../components';
-import { useLogout } from '@/features/auth/hooks';
+import styles from './UserHome.module.scss';
+import { useState } from 'react';
+import { Button, Modal } from '../../components';
 
 const UserHome = () => {
-  const logout = useLogout();
+  const [isEmpty] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    setIsOpen(true);
+  };
 
   return (
-    <div>
-      <p>User Home</p>
-      <Button clickAction={logout}>Logout</Button>
-    </div>
+    <main className={styles.main}>
+      {isEmpty ? (
+        <div className={styles.emptyBoard}>
+          <p>This board is empty. Create a new column to get started.</p>
+          <Button clickAction={handleClick} className={styles.button}>
+            + Add new column
+          </Button>
+        </div>
+      ) : (
+        <div>Colums</div>
+      )}
+      {isOpen && <Modal onClick={() => setIsOpen(false)}> </Modal>}
+    </main>
   );
 };
 

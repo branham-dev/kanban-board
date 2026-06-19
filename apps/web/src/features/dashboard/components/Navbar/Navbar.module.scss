@@ -87,3 +87,8 @@
   font-size: 0.9rem;
   font-style: italic;
 }
+
+.boardList {
+  max-height: 180px;
+  overflow: auto;
+}

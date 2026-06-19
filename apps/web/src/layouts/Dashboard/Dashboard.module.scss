@@ -11,9 +11,9 @@
 }
 
 .outletWrapper {
-  width: 98%;
+  width: 100%;
   margin: 0 auto;
-  // background-color: var(--color-surface);
   flex: 1;
   overflow: auto;
+  display: flex;
 }

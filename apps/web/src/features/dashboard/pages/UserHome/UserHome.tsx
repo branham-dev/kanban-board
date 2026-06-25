@@ -3,13 +3,15 @@ import { useState } from 'react';
 import { Button, Modal } from '../../components';
 import { useFetchBoardQuery } from '../../api';
 import { useParams } from 'react-router-dom';
+import clsx from 'clsx';
+import { useLogout } from '@/features/auth/hooks';
 
 const UserHome = () => {
   const { boardId } = useParams();
-  const [isEmpty] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const logout = useLogout();
 
-  const { data: board } = useFetchBoardQuery(boardId!, {
+  const { data: board, isLoading: fetchingBoard } = useFetchBoardQuery(boardId!, {
     skip: !boardId,
   });
   console.log(board);
@@ -17,6 +19,16 @@ const UserHome = () => {
   const handleClick = () => {
     setIsOpen(true);
   };
+
+  if (fetchingBoard) {
+    return <p>Loading...</p>;
+  }
+
+  if (!board) {
+    return <p>Board not found</p>;
+  }
+
+  const isEmpty = board.columns.length === 0;
 
   return (
     <main className={styles.main}>
@@ -28,9 +40,41 @@ const UserHome = () => {
           </Button>
         </div>
       ) : (
-        <div>Colums</div>
+        <div className={styles.columnContainer}>
+          {board.columns.map((column) => {
+            const isColumnEmpty = column.tasks.length === 0;
+            return (
+              <section key={column.id} className={styles.column}>
+                <h2>
+                  {column.name.toUpperCase()} ({column.tasks.length})
+                </h2>
+
+                <div
+                  className={clsx(styles.taskCardContainer, isColumnEmpty && styles.emptyColumn)}
+                >
+                  {column.tasks.map((task) => {
+                    const subtasks = task.subtasks.length;
+                    const isSubtasks = subtasks > 0;
+                    const completed = task.subtasks.filter(
+                      (subtask) => subtask.isCompleted === true,
+                    );
+                    return (
+                      <button className={styles.taskCard}>
+                        <p>{task.title}</p>
+                        <small>
+                          {isSubtasks && `${completed.length} of`} {subtasks} subtasks
+                        </small>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </div>
       )}
       {isOpen && <Modal onClick={() => setIsOpen(false)}> </Modal>}
+      <Button clickAction={logout}>Logout</Button>
     </main>
   );
 };

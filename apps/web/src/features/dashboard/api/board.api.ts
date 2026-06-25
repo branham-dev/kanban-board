@@ -1,5 +1,5 @@
 import { api } from '@/service/api';
-import type { BoardItem, BoardItemResponse } from '../types';
+import type { Board, BoardItem, BoardItemResponse, Response } from '../types';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,11 +19,14 @@ export const boardApi = api.injectEndpoints({
         body: { boardId },
       }),
     }),
-    fetchBoard: builder.query<unknown, string>({
+    fetchBoard: builder.query<Board, string>({
       query: (boardId) => ({
         url: `/dashboard/${boardId}`,
         method: 'GET',
       }),
+      transformResponse: (response: Response<Board>) => {
+        return response.data;
+      },
     }),
   }),
 });

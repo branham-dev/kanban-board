@@ -22,7 +22,7 @@ type Subtask = {
   isCompleted: boolean;
 };
 
-type Task = {
+export type Task = {
   columnId: string;
   id: string;
   title: string;
@@ -31,7 +31,7 @@ type Task = {
   subtasks: Subtask[];
 };
 
-type Column = {
+export type Column = {
   boardId: string;
   id: string;
   name: string;

@@ -1,0 +1,115 @@
+// @use '@/scss/mixins' as *;
+
+.taskView {
+  background-color: var(--color-surface);
+  padding: 1rem;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto 0;
+  border-radius: 5px;
+  pointer-events: all;
+  overflow: auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 1rem;
+  }
+  .description {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.subtasks {
+  @include flex-column;
+  margin: 0 0 1.25rem;
+  h4 {
+    @include article-subtitle;
+  }
+}
+
+.subtaskList {
+  @include flex-column(0.5rem);
+  .card {
+    background-color: var(--color-surface-secondary);
+    padding: 0.75rem 0.6rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    line-height: 1.25;
+    .checkbox {
+      accent-color: var(--color-primary);
+      &:checked + .title {
+        color: var(--color-text-secondary);
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+
+.currentStatus {
+  @include flex-column;
+
+  h4 {
+    @include article-subtitle;
+  }
+  .trigger {
+    border: 0.1rem solid var(--color-border-muted);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 3px;
+    margin: 0 0 0rem;
+    transition: border 300ms ease-in-out;
+    transition: margin 300ms ease-in-out 150ms;
+    &:hover {
+      border-color: var(--color-primary);
+    }
+    &.open {
+      border-color: var(--color-primary);
+      margin: 0 0 0.5rem;
+      transition: margin 300ms ease-in-out 0s;
+    }
+    img {
+      transition: transform 300ms ease;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .dropdown {
+    overflow: hidden;
+    max-height: 0;
+    transition: all 300ms ease-in-out;
+    @include box-shadow;
+
+    .dropdownInner {
+      border: 0.1rem solid var(--color-border-muted);
+      width: 100%;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 0.75rem;
+      border-radius: 3px;
+
+      button {
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+      }
+    }
+
+    &.open {
+      max-height: 300px;
+    }
+  }
+}

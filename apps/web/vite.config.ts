@@ -19,8 +19,17 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5174,
+    port: 5173,
     host: true,
-    allowedHosts: ['kanban.branhamkaranja.com'],
+    allowedHosts: ['software.branhamkaranja.com'],
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "@/scss/mixins" as *;
+        `,
+      },
+    },
   },
 });

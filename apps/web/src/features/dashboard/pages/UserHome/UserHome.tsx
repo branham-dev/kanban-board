@@ -1,14 +1,16 @@
 import styles from './UserHome.module.scss';
 import { useState } from 'react';
-import { Button, Modal } from '../../components';
+import { Button, Modal, TaskView } from '../../components';
 import { useFetchBoardQuery } from '../../api';
 import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { useLogout } from '@/features/auth/hooks';
+import type { Task } from '@dashboard/types';
 
 const UserHome = () => {
   const { boardId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const logout = useLogout();
 
   const { data: board, isLoading: fetchingBoard } = useFetchBoardQuery(boardId!, {
@@ -18,6 +20,11 @@ const UserHome = () => {
 
   const handleClick = () => {
     setIsOpen(true);
+  };
+
+  const handleTaskClick = (task: Task) => {
+    setIsOpen(true);
+    setSelectedTask(task);
   };
 
   if (fetchingBoard) {
@@ -59,7 +66,11 @@ const UserHome = () => {
                       (subtask) => subtask.isCompleted === true,
                     );
                     return (
-                      <button className={styles.taskCard}>
+                      <button
+                        key={task.id}
+                        onClick={() => handleTaskClick(task)}
+                        className={styles.taskCard}
+                      >
                         <p>{task.title}</p>
                         <small>
                           {isSubtasks && `${completed.length} of`} {subtasks} subtasks
@@ -74,6 +85,11 @@ const UserHome = () => {
         </div>
       )}
       {isOpen && <Modal onClick={() => setIsOpen(false)}> </Modal>}
+      {isOpen && selectedTask && (
+        <Modal onClick={() => setIsOpen(false)}>
+          <TaskView task={selectedTask} columns={board.columns} />
+        </Modal>
+      )}
       <Button clickAction={logout}>Logout</Button>
     </main>
   );

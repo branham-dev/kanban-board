@@ -10,7 +10,7 @@ const app = new Hono();
 app.use(
   '*',
   cors({
-    origin: ['http://localhost:5174', 'https://kanban.branhamkaranja.com'],
+    origin: ['http://localhost:5173', 'https://software.branhamkaranja.com'],
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

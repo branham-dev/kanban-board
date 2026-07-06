@@ -1,0 +1,16 @@
+@mixin article-subtitle {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+}
+
+@mixin flex-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin box-shadow {
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
+}

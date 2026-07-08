@@ -7,6 +7,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { AddColumnPayload } from '../../types';
 import { narrowError } from '@/utils';
 import { toast } from 'sonner';
+import Input from '../ui/Input/Input';
 
 type Inputs = {
   name: string;
@@ -52,21 +53,19 @@ const NewColumn = ({ onClose }: NewColumnProps) => {
       <ViewContainer>
         <h3 className={styles.title}>Add New Column</h3>
         <form onSubmit={handleSubmit(createNewColumn)}>
-          <label htmlFor="columnName" className={styles.label}>
-            <span>Column Name</span>
-            <input
-              id="columnName"
-              type="text"
-              {...register('name', {
-                required: 'Column name is required',
-                minLength: {
-                  value: 1,
-                  message: 'Column name must be at least 2 characters long.',
-                },
-              })}
-            />
-            {errors.name && <small className={styles.errorMessage}>{errors.name.message}</small>}
-          </label>
+          <Input
+            id="columnName"
+            label="Column Name"
+            placeholder="eg: TODO"
+            error={errors.name?.message}
+            {...register('name', {
+              required: 'Column name is required',
+              minLength: {
+                value: 2,
+                message: 'Column name must be at least 2 characters long.',
+              },
+            })}
+          />
           <Button type="submit" className={styles.button}>
             Add
           </Button>

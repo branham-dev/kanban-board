@@ -44,3 +44,9 @@ export type Board = {
   name: string;
   columns: Column[];
 };
+
+export type AddColumnPayload = {
+  name: string;
+  boardId: string;
+  position: number;
+};

@@ -1,5 +1,5 @@
 import { api } from '@/service/api';
-import type { Board, BoardItem, BoardItemResponse, Response } from '../types';
+import type { AddColumnPayload, Board, BoardItem, BoardItemResponse, Response } from '../types';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -27,6 +27,19 @@ export const boardApi = api.injectEndpoints({
       transformResponse: (response: Response<Board>) => {
         return response.data;
       },
+      providesTags: ['Board'],
+    }),
+    addColumn: builder.mutation<unknown, AddColumnPayload>({
+      query: (payload) => ({
+        url: 'board/add-column',
+        method: 'POST',
+        body: {
+          name: payload.name,
+          boardId: payload.boardId,
+          position: payload.position,
+        },
+      }),
+      invalidatesTags: ['Board'],
     }),
   }),
 });
@@ -35,4 +48,5 @@ export const {
   useListBoardsQuery: useListBoards,
   useUpdateLastBoardMutation,
   useFetchBoardQuery,
+  useAddColumnMutation,
 } = boardApi;

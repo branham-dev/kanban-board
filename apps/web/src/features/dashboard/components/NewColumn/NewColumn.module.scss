@@ -1,0 +1,33 @@
+.title {
+  margin: 0 0 1rem;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+
+  span {
+    font-weight: 500;
+    color: var(--color-primary-muted);
+  }
+
+  input {
+    outline: none;
+    border: 1px dashed var(--color-primary);
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+  }
+}
+
+.button {
+  // border-radius: 3px;
+}
+
+.errorMessage {
+  color: var(--color-danger);
+  font-weight: 500;
+}

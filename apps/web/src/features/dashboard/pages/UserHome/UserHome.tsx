@@ -1,6 +1,6 @@
 import styles from './UserHome.module.scss';
 import { useState } from 'react';
-import { Button, Modal, TaskView } from '../../components';
+import { Button, Modal, NewColumn, TaskView } from '../../components';
 import { useFetchBoardQuery } from '../../api';
 import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
@@ -10,6 +10,7 @@ import type { Task } from '@dashboard/types';
 const UserHome = () => {
   const { boardId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [isColumnOpen, setIsColumnOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const logout = useLogout();
 
@@ -27,6 +28,10 @@ const UserHome = () => {
     setSelectedTask(task);
   };
 
+  const handleNewColumn = () => {
+    setIsColumnOpen(true);
+  };
+
   if (fetchingBoard) {
     return <p>Loading...</p>;
   }
@@ -42,7 +47,7 @@ const UserHome = () => {
       {isEmpty ? (
         <div className={styles.emptyBoard}>
           <p>This board is empty. Create a new column to get started.</p>
-          <Button clickAction={handleClick} className={styles.button}>
+          <Button onClick={handleNewColumn} className={styles.button}>
             + Add new column
           </Button>
         </div>
@@ -90,7 +95,12 @@ const UserHome = () => {
           <TaskView task={selectedTask} columns={board.columns} />
         </Modal>
       )}
-      <Button clickAction={logout}>Logout</Button>
+      {isColumnOpen && (
+        <Modal onClick={() => setIsColumnOpen(false)}>
+          <NewColumn onClose={() => setIsColumnOpen(false)} />
+        </Modal>
+      )}
+      <Button onClick={logout}>Logout</Button>
     </main>
   );
 };

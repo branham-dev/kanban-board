@@ -35,7 +35,7 @@ const Dashboard = () => {
         {boardId === undefined ? (
           <main>
             <h1>Welcome, {authUser?.name || 'User'}!</h1>
-            <Button clickAction={logout}>Logout</Button>
+            <Button onClick={logout}>Logout</Button>
           </main>
         ) : (
           <Outlet />

@@ -1,1 +1,6 @@
-export { useListBoards, useUpdateLastBoardMutation, useFetchBoardQuery } from './board.api';
+export {
+  useListBoards,
+  useUpdateLastBoardMutation,
+  useFetchBoardQuery,
+  useAddColumnMutation,
+} from './board.api';

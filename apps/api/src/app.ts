@@ -1,7 +1,8 @@
 import { Hono } from 'hono';
 import authRoute from '@/modules/auth/auth.routes.js';
-import { cors } from 'hono/cors';
 import { boardRoute } from '@/modules/boards/boards.routes';
+import columnRoutes from '@/modules/columns/columns.routes';
+import { cors } from 'hono/cors';
 import { AppError } from './shared/errors/app.error';
 import { classifyError } from './shared/errors/classifyError';
 
@@ -23,6 +24,7 @@ app.get('/', (c) => {
 
 app.route('/auth', authRoute);
 app.route('/', boardRoute);
+app.route('/', columnRoutes);
 
 app.onError((error, c) => {
   console.log(error);

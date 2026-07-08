@@ -32,6 +32,6 @@ const authBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryErro
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: authBaseQuery,
-
+  tagTypes: ['Board'],
   endpoints: () => ({}),
 });

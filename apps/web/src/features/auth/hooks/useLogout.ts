@@ -1,7 +1,7 @@
 import { useLogoutMutation } from '@/features/auth/service';
 import { clearUser } from '@/features/auth/slice';
 import { api } from '@/service/api';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch } from '@/app/store/hooks';
 import { narrowError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';

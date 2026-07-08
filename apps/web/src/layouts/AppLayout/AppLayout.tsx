@@ -1,5 +1,5 @@
-import type { RootState } from '@/store/appStore';
-import { useAppSelector } from '@/store/hooks';
+import type { RootState } from '@/app/store/appStore';
+import { useAppSelector } from '@/app/store/hooks';
 import { useHydrate } from '@auth/service';
 import { Outlet } from 'react-router-dom';
 

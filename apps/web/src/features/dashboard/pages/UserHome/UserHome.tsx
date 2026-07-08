@@ -6,30 +6,26 @@ import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { useLogout } from '@/features/auth/hooks';
 import type { Task } from '@dashboard/types';
+import { useModal } from '@/app/providers/modal';
 
 const UserHome = () => {
   const { boardId } = useParams();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isColumnOpen, setIsColumnOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const logout = useLogout();
+  const { activeModal, openModal, closeModal } = useModal();
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const { data: board, isLoading: fetchingBoard } = useFetchBoardQuery(boardId!, {
     skip: !boardId,
   });
   console.log(board);
 
-  const handleClick = () => {
-    setIsOpen(true);
-  };
-
   const handleTaskClick = (task: Task) => {
-    setIsOpen(true);
+    openModal('taskView');
     setSelectedTask(task);
   };
 
   const handleNewColumn = () => {
-    setIsColumnOpen(true);
+    openModal('newColumn');
   };
 
   if (fetchingBoard) {
@@ -89,15 +85,15 @@ const UserHome = () => {
           })}
         </div>
       )}
-      {isOpen && <Modal onClick={() => setIsOpen(false)}> </Modal>}
-      {isOpen && selectedTask && (
-        <Modal onClick={() => setIsOpen(false)}>
+
+      {activeModal === 'taskView' && selectedTask && (
+        <Modal onClick={closeModal}>
           <TaskView task={selectedTask} columns={board.columns} />
         </Modal>
       )}
-      {isColumnOpen && (
-        <Modal onClick={() => setIsColumnOpen(false)}>
-          <NewColumn onClose={() => setIsColumnOpen(false)} />
+      {activeModal === 'newColumn' && (
+        <Modal onClick={closeModal}>
+          <NewColumn onClose={closeModal} />
         </Modal>
       )}
       <Button onClick={logout}>Logout</Button>

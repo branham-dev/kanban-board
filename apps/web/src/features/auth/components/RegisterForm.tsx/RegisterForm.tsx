@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { narrowError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from '@authSlice';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch } from '@/app/store/hooks';
 
 type Inputs = {
   name: string;

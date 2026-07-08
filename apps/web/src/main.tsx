@@ -7,16 +7,19 @@ import '@fontsource/plus-jakarta-sans/500.css';
 import '@fontsource/plus-jakarta-sans/600.css';
 import '@fontsource/plus-jakarta-sans/700.css';
 import { RouterProvider } from 'react-router-dom';
-import { appRouter } from '@/router/appRouter';
+import { appRouter } from '@/app/router/appRouter';
 import { Provider } from 'react-redux';
-import { appStore } from '@/store/appStore';
+import { appStore } from '@/app/store/appStore';
 import { Toaster } from 'sonner';
+import { ModalProvider } from './app/providers/modal';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={appStore}>
-      <Toaster position="top-center" richColors={true} />
-      <RouterProvider router={appRouter} />
+      <ModalProvider>
+        <Toaster position="top-center" richColors={true} />
+        <RouterProvider router={appRouter} />
+      </ModalProvider>
     </Provider>
   </StrictMode>,
 );

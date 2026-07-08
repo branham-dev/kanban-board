@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { narrowError } from '@/utils';
 import { setUser } from '@authSlice';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch } from '@/app/store/hooks';
 
 type Inputs = {
   email: string;

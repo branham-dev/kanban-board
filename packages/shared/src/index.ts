@@ -5,4 +5,4 @@ export {
   type LoginInputs,
 } from './schemas/auth.schema';
 
-export type { NewColumn } from './types';
+export type { NewColumn, CreateBoardPayload } from './types';

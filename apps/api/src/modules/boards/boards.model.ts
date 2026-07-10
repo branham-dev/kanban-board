@@ -2,6 +2,17 @@ import { db } from '@/database/connection';
 import { camelize } from '@/shared/utils/camelize';
 import type { BoardData, ColumnData, Subtask, Task } from './boards.types';
 
+export const getLastPosition = async (userId: string) => {
+  const queryString = `
+    SELECT MAX(position) AS last_position
+    FROM boards
+    WHERE user_id = $1
+  `;
+  const raw = await db.query(queryString, [userId]);
+  const result = camelize(raw.rows[0]);
+  return result.lastPosition;
+};
+
 export const listAllBoards = async (userId: string) => {
   const string = `
             SELECT * 

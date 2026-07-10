@@ -3,3 +3,11 @@ export type NewColumn = {
   boardId: string;
   position: number;
 };
+
+export type CreateBoardPayload = {
+  name: string;
+  columns:
+    | Array<{
+        name: string;
+      }>
+};

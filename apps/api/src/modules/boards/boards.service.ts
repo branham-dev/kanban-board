@@ -3,6 +3,8 @@ import * as Model from './boards.model';
 import { boardIdSchema, createBoardSchema } from './boards.schema';
 import { z } from 'zod';
 import { flattenError } from '../auth/utils/flatten';
+import type { CreateBoardPayload } from '@kanban/shared';
+import { addColumn } from '@/modules/columns/columns.model';
 
 export const listAllBoards = async (userId: string) => {
   if (userId === undefined || userId === null) {
@@ -16,16 +18,34 @@ export const listAllBoards = async (userId: string) => {
   return response;
 };
 
-export const createBoard = async (userId: string, payload: { name: string; position: number }) => {
+export const createBoard = async (userId: string, payload: CreateBoardPayload) => {
   const validated = createBoardSchema.safeParse(payload);
   if (!validated.success) {
     const raw = z.treeifyError(validated.error);
     const errors = flattenError(raw);
+
     throw new AppError('Invalid Credentials', 400, errors);
   }
-  const response = await Model.createBoard(userId, payload.name, payload.position);
+  const { name, columns } = validated.data;
 
-  return response;
+  const lastPosition = await Model.getLastPosition(userId);
+
+  const position = lastPosition === null ? 1000 : lastPosition + 1000;
+  console.log(position);
+
+  const boardRes = await Model.createBoard(userId, name, position);
+
+  for (const [index, column] of columns.entries()) {
+    await addColumn({
+      name: column.name,
+      boardId: boardRes.id,
+      position: (index + 1) * 1000,
+    });
+  }
+  const createdBoard = await listBoard(boardRes.id, userId);
+  console.log('createBoard:', createdBoard);
+
+  return createdBoard;
 };
 
 export const updateLastBoard = async (userId: string, payload: { boardId: string }) => {

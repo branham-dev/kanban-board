@@ -10,6 +10,8 @@ export const listAllBoards = async (c: Context) => {
 
 export const createBoard = async (c: Context) => {
   const boardData = await c.req.json();
+  // console.log(boardData);
+  // return;
   const user = c.get('user');
   const response = await Service.createBoard(user.userId, boardData);
   return c.json({ success: true, message: 'Board created successfully', data: response }, 201);

@@ -5,7 +5,7 @@ type ViewContainerProps = {
 };
 
 const ViewContainer = ({ children }: ViewContainerProps) => {
-  return <div className={styles.viewContainer}>{children}</div>;
+  return <article className={styles.viewContainer}>{children}</article>;
 };
 
 export default ViewContainer;

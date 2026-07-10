@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { useListBoards, useUpdateLastBoardMutation } from '@dashboard/api';
 import { LayoutList } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useModal } from '@/app/providers/modal';
 
 type BoardNameProps = {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ const Navbar = () => {
   const { data = [], isLoading } = useListBoards();
 
   const [updateLastBoard] = useUpdateLastBoardMutation();
+  const { openModal } = useModal();
 
   const boards = Array.from(new Map(data.map((b) => [b.name, b])).values());
 
@@ -86,7 +88,12 @@ const Navbar = () => {
               </BoardName>
             ))}
           </div>
-          <BoardName>
+          <BoardName
+            onClick={() => {
+              openModal('newBoard');
+              setIsOpen(false);
+            }}
+          >
             <LayoutList color="#635fc7" size={24} strokeWidth={1.5} />
             <p className={styles.createBoard}>+ Create New Board</p>
           </BoardName>

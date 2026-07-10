@@ -6,8 +6,7 @@ export type NewColumn = {
 
 export type CreateBoardPayload = {
   name: string;
-  columns:
-    | Array<{
-        name: string;
-      }>
+  columns: Array<{
+    name: string;
+  }>;
 };

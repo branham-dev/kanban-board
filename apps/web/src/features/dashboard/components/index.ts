@@ -5,5 +5,6 @@ import TaskView from './TaskView/TaskView';
 import NewColumn from './NewColumn/NewColumn';
 import ViewContainer from './ui/ViewContainer/ViewContainer';
 import Input from './ui/Input/Input';
+import NewBoard from './NewBoard/NewBoard';
 
-export { Navbar, Button, Modal, TaskView, NewColumn, ViewContainer, Input };
+export { Navbar, Button, Modal, TaskView, NewColumn, ViewContainer, Input, NewBoard };

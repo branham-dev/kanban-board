@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin: 0 0 1rem;
+  margin: 0 0 0rem;
+  width: 100%;
 
   span {
     font-weight: 600;
@@ -18,6 +19,7 @@
     font-family: inherit;
     font-size: 0.75rem;
     color: var(--color-text-secondary);
+    width: 100%;
 
     &::placeholder {
       font-size: 0.75rem;

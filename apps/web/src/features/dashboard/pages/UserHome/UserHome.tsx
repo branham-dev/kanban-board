@@ -1,23 +1,33 @@
 import styles from './UserHome.module.scss';
-import { useState } from 'react';
-import { Button, Modal, NewColumn, TaskView } from '../../components';
+import { useEffect, useState } from 'react';
+import { Button, Modal, NewBoard, NewColumn, TaskView } from '../../components';
 import { useFetchBoardQuery } from '../../api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { useLogout } from '@/features/auth/hooks';
 import type { Task } from '@dashboard/types';
 import { useModal } from '@/app/providers/modal';
+import { useAppSelector } from '@/app/store/hooks';
+import type { RootState } from '@/app/store/appStore';
 
 const UserHome = () => {
+  const navigate = useNavigate();
   const { boardId } = useParams();
   const logout = useLogout();
   const { activeModal, openModal, closeModal } = useModal();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
+  const lastBoardId = useAppSelector((state: RootState) => state.auth.user?.lastBoardId);
+
   const { data: board, isLoading: fetchingBoard } = useFetchBoardQuery(boardId!, {
     skip: !boardId,
   });
-  console.log(board);
+
+  useEffect(() => {
+    if (!fetchingBoard && !board && lastBoardId && boardId !== lastBoardId) {
+      navigate(`/dashboard/${lastBoardId}`, { replace: true });
+    }
+  }, [fetchingBoard, board, lastBoardId, boardId, navigate]);
 
   const handleTaskClick = (task: Task) => {
     openModal('taskView');
@@ -33,7 +43,7 @@ const UserHome = () => {
   }
 
   if (!board) {
-    return <p>Board not found</p>;
+    return null;
   }
 
   const isEmpty = board.columns.length === 0;
@@ -94,6 +104,11 @@ const UserHome = () => {
       {activeModal === 'newColumn' && (
         <Modal onClick={closeModal}>
           <NewColumn onClose={closeModal} />
+        </Modal>
+      )}
+      {activeModal === 'newBoard' && (
+        <Modal onClick={closeModal}>
+          <NewBoard />
         </Modal>
       )}
       <Button onClick={logout}>Logout</Button>

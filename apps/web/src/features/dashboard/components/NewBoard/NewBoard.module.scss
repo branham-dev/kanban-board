@@ -1,0 +1,52 @@
+.title {
+  margin: 0 0 0.75rem;
+}
+
+.boardInput {
+  margin: 0 0 1rem;
+}
+
+.button {
+  width: 100%;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.addButton {
+  width: 100%;
+  border-radius: 50px;
+  background-color: var(--color-bg);
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  font-weight: 650;
+  font-size: 0.75rem;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem;
+}
+
+.fieldList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+
+.fieldContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  .input {
+    display: inline;
+  }
+  .removeButton {
+    padding: 0.4rem 0.5rem;
+  }
+}

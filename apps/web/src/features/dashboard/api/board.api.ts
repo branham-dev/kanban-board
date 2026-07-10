@@ -1,5 +1,6 @@
 import { api } from '@/service/api';
 import type { AddColumnPayload, Board, BoardItem, BoardItemResponse, Response } from '../types';
+import type { CreateBoardPayload } from '@kanban/shared';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,6 +12,7 @@ export const boardApi = api.injectEndpoints({
       transformResponse: (response: BoardItemResponse) => {
         return response.data;
       },
+      providesTags: ['Boards'],
     }),
     updateLastBoard: builder.mutation<void, string>({
       query: (boardId) => ({
@@ -30,16 +32,28 @@ export const boardApi = api.injectEndpoints({
       providesTags: ['Board'],
     }),
     addColumn: builder.mutation<unknown, AddColumnPayload>({
-      query: (payload) => ({
-        url: 'board/add-column',
-        method: 'POST',
-        body: {
-          name: payload.name,
-          boardId: payload.boardId,
-          position: payload.position,
-        },
-      }),
+      query: (payload) => {
+        console.log('Payload:', payload);
+        return {
+          url: 'board/add-column',
+          method: 'POST',
+          body: { payload },
+        };
+      },
       invalidatesTags: ['Board'],
+    }),
+    createBoard: builder.mutation<Board, CreateBoardPayload>({
+      query: (payload) => {
+        return {
+          url: 'board/create',
+          method: 'POST',
+          body: payload,
+        };
+      },
+      invalidatesTags: ['Boards'],
+      transformResponse: (response: Response<Board>) => {
+        return response.data;
+      },
     }),
   }),
 });
@@ -49,4 +63,5 @@ export const {
   useUpdateLastBoardMutation,
   useFetchBoardQuery,
   useAddColumnMutation,
+  useCreateBoardMutation,
 } = boardApi;

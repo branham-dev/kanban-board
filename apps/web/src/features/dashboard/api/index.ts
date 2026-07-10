@@ -3,4 +3,5 @@ export {
   useUpdateLastBoardMutation,
   useFetchBoardQuery,
   useAddColumnMutation,
+  useCreateBoardMutation,
 } from './board.api';

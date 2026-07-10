@@ -12,8 +12,6 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
 });
 
-console.log('Base Query', baseQuery);
-
 const authBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
   args,
   apiCtx,
@@ -32,6 +30,6 @@ const authBaseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryErro
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: authBaseQuery,
-  tagTypes: ['Board'],
+  tagTypes: ['Board', 'Boards'],
   endpoints: () => ({}),
 });

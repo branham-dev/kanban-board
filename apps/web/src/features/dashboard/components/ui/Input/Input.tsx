@@ -1,14 +1,16 @@
+import clsx from 'clsx';
 import styles from './Input.module.scss';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
+  label?: string;
   error: string | undefined;
+  labelClass?: string | undefined;
 };
 
-const Input = ({ label, error, id, ...props }: InputProps) => {
+const Input = ({ label, error, id, labelClass, ...props }: InputProps) => {
   return (
-    <label htmlFor={id} className={styles.label}>
-      <span>{label}</span>
+    <label htmlFor={id} className={clsx(styles.label, labelClass)}>
+      {label && <span>{label}</span>}
       <input id={id} {...props} />
       {error && <small>{error}</small>}
     </label>

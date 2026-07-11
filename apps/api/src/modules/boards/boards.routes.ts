@@ -9,3 +9,5 @@ boardRoute.post('board/create', authenticate, Controller.createBoard);
 
 boardRoute.patch('users/preferences/last-board', authenticate, Controller.updateLastBoard);
 boardRoute.get('dashboard/:boardId', authenticate, Controller.listBoard);
+
+boardRoute.delete('board/:boardId', authenticate, Controller.deleteBoard);

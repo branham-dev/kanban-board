@@ -32,3 +32,12 @@ export const listBoard = async (c: Context) => {
 
   return c.json({ success: true, message: 'Success!', data: response ?? 'undefined' });
 };
+
+export const deleteBoard = async (c: Context) => {
+  const boardId = c.req.param('boardId');
+  const { userId } = c.get('user');
+
+  await Service.deleteBoard(boardId, userId);
+
+  return c.json({ success: true, message: 'Successfuly Deleted' });
+};

@@ -10,7 +10,11 @@ function ModalProvider({ children }: ModalProviderProps) {
   const [activeModal, setActiveModal] = useState<ModalType>('none');
 
   const openModal = (modal: ModalType) => {
-    setActiveModal(modal);
+    if (activeModal === modal) {
+      setActiveModal('none');
+    } else {
+      setActiveModal(modal);
+    }
   };
 
   const closeModal = () => {

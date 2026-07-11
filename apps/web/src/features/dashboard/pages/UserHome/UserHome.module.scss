@@ -85,3 +85,39 @@ h2 {
     font-weight: 600;
   }
 }
+
+.deleteModal {
+  padding: 0.5rem;
+  .deleteTitle {
+    color: var(--color-danger);
+    margin: 0 0 0.5rem;
+  }
+  .deleteDescription {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.015em;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+  .buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.55rem;
+
+    .modalButton {
+      width: 50%;
+      padding: 0.5rem 0;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .deleteButton {
+      background-color: var(--color-danger);
+      color: var(--color-surface);
+    }
+    .cancelButton {
+      background-color: var(--color-surface-muted);
+      color: var(--color-primary);
+    }
+  }
+}

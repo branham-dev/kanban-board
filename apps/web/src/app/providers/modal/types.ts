@@ -1,4 +1,10 @@
-export type ModalType = 'none' | 'newBoard' | 'newColumn' | 'taskView';
+export type ModalType =
+  | 'none'
+  | 'newBoard'
+  | 'newColumn'
+  | 'taskView'
+  | 'boardActions'
+  | 'deleteBoard';
 
 export type ModalContextType = {
   activeModal: ModalType;

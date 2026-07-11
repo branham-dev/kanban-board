@@ -6,5 +6,6 @@ import NewColumn from './NewColumn/NewColumn';
 import ViewContainer from './ui/ViewContainer/ViewContainer';
 import Input from './ui/Input/Input';
 import NewBoard from './NewBoard/NewBoard';
+import ActionsView from './ui/ActionsView/ActionsView';
 
-export { Navbar, Button, Modal, TaskView, NewColumn, ViewContainer, Input, NewBoard };
+export { Navbar, Button, Modal, TaskView, NewColumn, ViewContainer, Input, NewBoard, ActionsView };

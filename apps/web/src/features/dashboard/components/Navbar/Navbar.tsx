@@ -10,6 +10,7 @@ import { useListBoards, useUpdateLastBoardMutation } from '@dashboard/api';
 import { LayoutList } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useModal } from '@/app/providers/modal';
+import ActionsView from '../ui/ActionsView/ActionsView';
 
 type BoardNameProps = {
   children: React.ReactNode;
@@ -72,9 +73,10 @@ const Navbar = () => {
           <button>
             <img src={addIcon} alt="icon" />
           </button>
-          <button>
+          <button onClick={() => openModal('boardActions')}>
             <img src={verticalEllipsis} alt="icon" />
           </button>
+          <ActionsView />
         </div>
       </div>
       <div className={clsx(styles.dropdown, isOpen && styles.active)}>

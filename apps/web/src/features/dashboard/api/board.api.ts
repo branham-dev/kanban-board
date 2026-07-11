@@ -55,6 +55,13 @@ export const boardApi = api.injectEndpoints({
         return response.data;
       },
     }),
+    deleteBoard: builder.mutation<void, string>({
+      query: (boardId) => ({
+        url: `/board/${boardId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Boards'],
+    }),
   }),
 });
 
@@ -64,4 +71,5 @@ export const {
   useFetchBoardQuery,
   useAddColumnMutation,
   useCreateBoardMutation,
+  useDeleteBoardMutation,
 } = boardApi;

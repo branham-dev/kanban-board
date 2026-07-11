@@ -122,3 +122,26 @@ export const listBoard = async (payload: unknown, userId: string) => {
     columns: columnsWithTasks,
   };
 };
+
+export const deleteBoard = async (boardId: unknown, userId: string) => {
+  if (!boardId) {
+    throw new AppError('Undefined board identity', 400, null);
+  }
+  const validated = boardIdSchema.safeParse({ boardId });
+
+  if (!validated.success) {
+    throw new AppError('Invalid board ID', 422, null);
+  }
+
+  const board = await Model.listBoard(validated.data.boardId);
+
+  if (board == null) {
+    throw new AppError('Board does not exist', 404, null);
+  }
+
+  if (board.userId !== userId) {
+    throw new AppError('You do not have access to this board', 403, null);
+  }
+
+  await Model.deleteBoard(validated.data.boardId);
+};

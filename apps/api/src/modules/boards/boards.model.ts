@@ -114,3 +114,12 @@ export const listSubtasks = async (taskIds: string[]): Promise<Subtask[]> => {
 
   return result;
 };
+
+export const deleteBoard = async (boardId: string) => {
+  const queryString = `
+    DELETE FROM boards
+    WHERE id = $1
+  `;
+  const response = await db.query(queryString, [boardId]);
+  console.log(response);
+};
